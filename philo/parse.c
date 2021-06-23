@@ -6,7 +6,7 @@
 /*   By: ybouddou <ybouddou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/14 14:23:00 by ybouddou          #+#    #+#             */
-/*   Updated: 2021/06/20 19:15:12 by ybouddou         ###   ########.fr       */
+/*   Updated: 2021/06/23 09:09:41 by ybouddou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ int	parse_data(t_data *data, char **av)
 		return (err_msg("Error args\n"));
 	gettimeofday(&time, NULL);
 	data->start = (time.tv_sec * 1000) + (time.tv_usec / 1000);
+	data->philos = data->nb_philo;
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: ybouddou <ybouddou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/19 16:51:31 by ybouddou          #+#    #+#             */
-/*   Updated: 2021/06/20 17:01:12 by ybouddou         ###   ########.fr       */
+/*   Updated: 2021/06/21 10:52:29 by ybouddou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,16 +35,17 @@ typedef struct s_data
 
 typedef struct s_philo
 {
-	int		*pids;
 	sem_t	*fork;
 	sem_t	*msg;
 	sem_t	*prog;
+	sem_t	*eat;
 	t_data	*data;
 	int		must_eat;
 	long	start_eat;
 	long	limit;
 	int		index;
 	int		*pid;
+	int		counter;
 }				t_philo;
 
 // Utils

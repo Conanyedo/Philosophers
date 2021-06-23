@@ -6,7 +6,7 @@
 /*   By: ybouddou <ybouddou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/19 16:51:14 by ybouddou          #+#    #+#             */
-/*   Updated: 2021/06/20 20:23:36 by ybouddou         ###   ########.fr       */
+/*   Updated: 2021/06/23 08:51:36 by ybouddou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ void	state(t_philo	*philo)
 		if (!philo->must_eat)
 			break ;
 	}
+	sem_post(philo->eat);
 }
 
 void	create_processes(t_philo *philo, int num)
@@ -77,30 +78,50 @@ void	create_processes(t_philo *philo, int num)
 			philo->index = i;
 			gettimeofday(&time, NULL);
 			philo->start_eat = (time.tv_sec * 1000) + (time.tv_usec / 1000);
-			if (pthread_create(&th_philo, NULL, &death_check, (void *)philo) != 0)
+			if (pthread_create(&th_philo, NULL, &death_check, (void *)philo))
 				perror("Failed to create thread");
 			pthread_detach(th_philo);
 			state(philo);
 			exit(0);
 		}
-		usleep(100);
 	}
 	sem_wait(philo->prog);
-	i = -1;
-	while (++i < philo->data->nb_philo)
+	while (i--)
 		kill(philo->pid[i], SIGKILL);
+}
+
+void	*eat_check(void *args)
+{
+	t_philo		*philo;
+
+	philo = args;
+	while (1)
+	{
+		sem_wait(philo->eat);
+		philo->counter++;
+		if (philo->counter == philo->data->nb_philo)
+		{
+			sem_post(philo->prog);
+			break ;
+		}
+	}
+	return (NULL);
 }
 
 int	main(int ac, char **av)
 {
 	t_philo		philo;
 	t_data		data;
+	pthread_t	th_eat;
 
 	if (ac < 5 || ac > 6)
 		return (err_msg("Error args\n"));
 	if (parse_data(&data, av))
 		return (1);
 	init(&philo, &data);
+	if (pthread_create(&th_eat, NULL, &eat_check, (void *)&philo))
+		perror("Failed to create thread");
+	pthread_detach(th_eat);
 	create_processes(&philo, data.nb_philo);
 	free(philo.pid);
 	return (0);

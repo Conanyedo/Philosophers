@@ -6,7 +6,7 @@
 /*   By: ybouddou <ybouddou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/26 10:43:32 by ybouddou          #+#    #+#             */
-/*   Updated: 2021/06/17 08:48:26 by ybouddou         ###   ########.fr       */
+/*   Updated: 2021/06/23 09:24:17 by ybouddou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	ft_strlen(const char *s)
 int	err_msg(char *msg)
 {
 	write(2, msg, ft_strlen(msg));
-	return (0);
+	return (1);
 }
 
 int	ft_atoi(char *s)

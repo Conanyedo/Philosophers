@@ -6,7 +6,7 @@
 /*   By: ybouddou <ybouddou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/25 16:26:11 by ybouddou          #+#    #+#             */
-/*   Updated: 2021/06/20 19:15:52 by ybouddou         ###   ########.fr       */
+/*   Updated: 2021/06/23 15:07:30 by ybouddou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void	*routine(void *args)
 	if (pthread_create(&th_philo, NULL, &death_check, args) != 0)
 		perror("Failed to create thread");
 	pthread_detach(th_philo);
-	while (1)
+	while (1 && !philo->data->must_eat)
 	{
 		state(philo);
 		if (philo->must_eat > 0)
@@ -82,8 +82,9 @@ void	*routine(void *args)
 		if (!philo->must_eat)
 			break ;
 	}
-	philo->data->must_eat--;
 	if (!philo->data->must_eat)
+		philo->data->philos--;
+	if (!philo->data->philos)
 		pthread_mutex_unlock(&philo->data->prog);
 	return (NULL);
 }

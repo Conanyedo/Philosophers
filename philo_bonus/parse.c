@@ -6,7 +6,7 @@
 /*   By: ybouddou <ybouddou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/19 16:51:26 by ybouddou          #+#    #+#             */
-/*   Updated: 2021/06/20 20:09:18 by ybouddou         ###   ########.fr       */
+/*   Updated: 2021/06/21 10:55:45 by ybouddou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,11 @@ void	init(t_philo *philo, t_data *data)
 	sem_unlink("fork");
 	sem_unlink("msg");
 	sem_unlink("prog");
+	sem_unlink("eat");
 	philo->fork = sem_open("fork", O_CREAT, 0666, data->nb_philo);
 	philo->msg = sem_open("msg", O_CREAT, 0666, 1);
 	philo->prog = sem_open("prog", O_CREAT, 0666, 1);
+	philo->eat = sem_open("eat", O_CREAT, 0666, 0);
 	philo->data = data;
 	philo->must_eat = data->must_eat;
 	philo->pid = (int *)malloc(sizeof(int) * data->nb_philo);

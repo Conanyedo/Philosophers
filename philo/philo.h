@@ -6,7 +6,7 @@
 /*   By: ybouddou <ybouddou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/25 16:34:11 by ybouddou          #+#    #+#             */
-/*   Updated: 2021/06/20 19:14:36 by ybouddou         ###   ########.fr       */
+/*   Updated: 2021/06/23 09:08:38 by ybouddou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ typedef struct s_data
 	int				time_sleep;
 	int				must_eat;
 	long			start;
+	int				philos;
 	pthread_mutex_t	*fork;
 	pthread_mutex_t	prog;
 	pthread_mutex_t	msg;
